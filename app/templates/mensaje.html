@@ -1,0 +1,197 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+{% load static %}
+
+
+<nav class="navbar navbar-expand-lg navbar-light  fixed-top " style="background:#ffffff; box-shadow:0px 0px 5px 2px #a0a0a0;position:block">
+
+  <div class="container-fluid">
+    <a class="navbar-brand " href="{% url 'inicio' %}"><img src="../static/img/Fox.png" style="width:40px;height: 40px; margin-right: 5px;"></a>
+      <p style="font-family: forte;" class="display-6">FaceFox</p>      
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+   
+    <div class="collapse navbar-collapse m-2" id="navbarText">
+        
+      <ul class="navbar-nav mx-auto mb-2 mb-lg-0 justify-content-end">
+      	<!--
+        <li class="nav-item">
+          <a class="nav-link" href="#">Features</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Pricing</a>
+        </li>
+    -->
+      </ul>
+
+      <span class="navbar-text">
+        <a href="{% url 'profile' request.user %}" class="nav-link"> <img src="../static/img/miPerfil.png" style="width:25px;height: 25px; "></a>
+      </span>
+      <span class="navbar-text">
+        <a href="{% url 'Buscar' %}" class="nav-link"> <img src="../static/img/buscador.png" style="width:25px;height: 25px; "></a>
+      </span>
+       
+       <span class="navbar-text">
+        <a href="" class="nav-link"> <img src="../static/img/notificacion.png" style="width:25px;height: 25px; "></a>
+      </span>
+      
+       
+      <span class="navbar-text">
+      	<a href="{% url 'logout' %}" class="nav-link"> <img src="../static/img/salir.png" style="width:25px;height: 22px; "></a>
+      </span>
+
+    </div>
+  </div>
+</nav>
+
+
+
+
+
+<div class="container mt-5 mt-5" style="margin-top: 300px;">
+	<div class="row d-flex justify-content-center mt-5 mt-5">
+		
+		<div class=" col-12 col-md-8 p-5 mt-5"  style="  background: rgba(255,255,255,1 );box-shadow: 0px 0px 5px 2px #a0a0a0;">
+
+
+<div class="mt-5" >
+
+  
+  
+
+
+
+
+              {% for mensaje in object.canalmensaje_set.all %}
+          
+              {% if request.user == mensaje.usuario %}
+              
+              <div id="" style="background-color: rgb(7, 161, 238); color: rgb(255, 255, 255);margin-left: 25%; margin-top: 5px; padding: 5px; border-radius: 20px 0px 20px 20px;">
+
+                <small>@{{mensaje.usuario}}</small>
+                <p class="lead font-weight-bold">{{mensaje.texto}}</p>
+                <small style="text-align: left;">{{mensaje.tiempo}}</small>
+
+              </div>
+
+              {% else  %}
+              
+              <div id="" style="background-color: rgb(58, 59, 59); color: rgb(255, 255, 255);margin-right: 25%; margin-top: 5px; padding: 5px; border-radius: 0px 20px 20px 20px;">
+
+                <small>@{{mensaje.usuario}}</small>
+                <p class="lead font-weight-bold">{{mensaje.texto}}</p>
+                <small style="text-align: left;">{{mensaje.tiempo}}</small>
+
+              </div>
+
+
+              {% endif %}
+            
+            
+            
+            
+            
+            {% endfor %}
+              
+          </div>
+
+
+<div style="position: unset;">
+
+  <form id="form_submit" action="{{ request.path }}" method="POST">
+    {% csrf_token %}
+  
+    {{form.as_p}}
+  
+    <button type="submit" class="btn btn-primary p-2 mx-auto" style="width:100%;border-radius: 10px;">
+      PUBLICAR
+    </button>
+    
+  </form>
+</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ********** javascript ***************** -->
+<!-- 
+<script>
+
+  const MsgForm = document.getElementById("form_submit")
+  const MsgContainer = document.getElementById("contenedor_mensaje")
+  
+  MsgForm.addEventListener("submit",(event)=>{
+
+    event.preventDefault()
+    const targetDate = event.target
+    const formData = new FormData(targetDate)
+
+    const xhr = new XMLHttpRequest()
+
+    const endpoint = MsgForm.getAttribute("action")
+    const method = MsgForm.getAttribute("method")
+    xhr.open(method,endpoint)
+
+    xhr.responseType = 'json'
+
+    xhr.setRequestHeader("HTTP_X_REQUESTED_WITH","XMLHttpRequest")
+    xhr.setRequestHeader("X-Requested-With","XMLHttpRequest")
+
+    xhr.onload = () =>{
+
+      console.log(xhr.status,xhr.response)
+      let respuestaData=0;
+      if(xhr.status === 500){
+        respuestaData = xhr.response
+        let actualMensaje = MsgContainer.innerHTML
+        actualMensaje += `<div class=''><b>${respuestaData.username}
+          </b><p>${respuestaData.mensaje}
+            </p></div>`
+        
+            MsgContainer.innerHTML = actualMensaje
+            MsgForm.reset()
+      }else if(xhr.status === 400){
+console.log(xhr.response)
+      }else{
+        alert('ocurrio un error')
+      }
+
+    }
+
+    xhr.send(formData)
+
+  })
+
+
+
+</script> -->
+
+
+
+
+{% endblock content %}

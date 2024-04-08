@@ -1,0 +1,137 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+{% load static %}
+<style type="text/css">
+    
+body{
+   background:  #dedede;
+}
+.x{
+   
+    margin-top: 20px;
+    padding:  8px;
+    
+   
+    width:20%;
+    border-radius: 15px;
+    text-align: center;
+    
+    
+}
+
+input[type="file"]{
+    width:0.1px;
+    height: 0.1px;
+    opacity: 0;
+
+}
+
+</style>
+<!-- herencia de template -->
+<nav class="navbar navbar-expand-lg navbar-light  fixed-top " style="background:#ffffff;box-shadow:0px 0px 5px 2px #a0a0a0;">
+  <div class="container-fluid">
+    <a class="navbar-brand " href="{% url 'inicio' %}"><img src="../static/img/Fox.png" style="width:40px;height: 40px;"></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarText">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 justify-content-end">
+        <!--
+        <li class="nav-item">
+          <a class="nav-link" href="#">Features</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Pricing</a>
+        </li>
+    -->
+      </ul>
+
+      <span class="navbar-text">
+        <a href="{% url 'profile' request.user %}" class="nav-link"> <img src="../static/img/miPerfil.png" style="width:25px;height: 25px; "></a>
+      </span>
+       <span class="navbar-text">
+        <a href="" class="nav-link"> <img src="../static/img/notificacion.png" style="width:25px;height: 25px; "></a>
+      </span>
+   
+      <span class="navbar-text">
+        <a href="{% url 'logout' %}" class="nav-link"> <img src="../static/img/salir.png" style="width:23px;height: 20px; "></a>
+      </span>
+
+    </div>
+  </div>
+</nav>
+
+
+
+<div class="container mt-5" >
+    <div class="row">
+  <!-- ****************************************************************************** -->      
+        
+
+<!--  inicio del main principal -->
+  <!-- ****************************************************************************** -->  
+
+        <div class="col-12 col-lg-8 mx-auto col-xl-8 mb-5 bg-muted mt-5 " style="margin-top: 30px; " >          
+            
+            <!-- Center -->
+    <div class="content mt-5" style="">
+
+        <div  class="border " style="background: white; border-radius: 10px;">
+            <div class="d-flex m-3">
+                <div class="col-xs rounded-circle">
+                    <!-- Image form -->
+                    <img src="{{request.user.profile.image.url}} " style="width:100px;border-radius: 50%;" alt=""
+                        class="m-3">
+                    <!-- Formulario -->
+                </div>
+
+                <!-- Formulario -->
+                <form class="col pr-0" method="post" enctype="multipart/form-data">
+                   {% csrf_token %}
+                   {{form.content}}
+
+
+             
+  {% if form.errors %}             
+                    <p class="text-center font-weight-bold mt-3 text-danger wow bounceIn  animated" data-wow-delay="0.30s" style="   visibility: visible; animation-delay: .30s; animation-name: bounceIn; ">Campos incorrectos</p>
+            {% endif %}
+
+            <div class="mt-3" >
+                 <input type="file" name="image" class=" border mx-auto" id="boton" placeholder="Foto" aria-label='Archivo' >
+                 <label class="x mt-3" for="boton">
+                     <img style="width:25px;height: 25px; " src="../static/img/subirFoto.png">
+                 </label>
+
+
+
+                 <button class="btn btn-primary p-2 mx-auto" style="width:50%;border-radius: 15px;">PUBLICAR</button>
+            </div>      
+               
+                </form>
+                <!-- Formulario -->
+
+            </div>
+            <div class="d-flex justify-content-center mt-2">
+            </div>
+        </div>
+
+        <!-- Tweets -->
+   
+
+    </div>
+    <!-- End Center -->
+
+
+        </div>
+
+<!-- fin del main principal -->
+
+  <!-- ****************************************************************************** -->  
+     
+    </div>
+</div>
+
+
+
+{% endblock content %}
